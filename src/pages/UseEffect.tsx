@@ -10,9 +10,8 @@ const UseEffect = () => {
         /* ** componentDidMount run only one time when component created (Because the Dependency List is free) ** */
         const fetchProduct = async () => {
             try {
-                const response = await fetch('https://dummyjson.com/products', {signal: signalValue})
-                const jsonData = await response.json();
-                setProduct(jsonData.products)
+                const response = await (await (fetch('https://dummyjson.com/products', {signal: signalValue}))).json()
+                setProduct(response.products)
             } catch(error){
                 console.log(error);
             }
