@@ -3,21 +3,20 @@ import { useEffect, useState } from "react"
 const UseEffect = () => {
     const [product, setProduct] = useState([])
 
+    /* ** componentDidMount run only one time when component created (Because the Dependency List is free) ** */
     useEffect( () => {
         const controller = new AbortController()
         const signalValue = controller.signal;
 
-        /* ** componentDidMount run only one time when component created (Because the Dependency List is free) ** */
-        const fetchProduct = async () => {
+        // ** IIFE
+        ( async() => {
             try {
                 const response = await (await (fetch('https://dummyjson.com/products', {signal: signalValue}))).json()
                 setProduct(response.products)
             } catch(error){
                 console.log(error);
             }
-        }
-
-        fetchProduct()
+        })()
 
         /* The abort() method of the AbortController interface aborts an asynchronous operation 
         before it has completed. This is able to abort fetch requests */
